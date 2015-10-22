@@ -3,21 +3,20 @@
 	"version": "0.0.0",
 	"files": ["dist", "src"],
 	"scripts": {
-		"prepublish": "babel src --out-dir dist --source-maps",
+		"install": "babel src --out-dir dist --source-maps",
 		"watch": "babel src --out-dir dist --source-maps --watch",
 		"lint": "eslint src"
 	},
 	"dependencies": {
-		"chalk": "1.1.0",
-		"esast": "andy-hanson/esast",
+		"chalk": "1.1.1",
 		"mason-compile": "mason-lang/mason-compile",
 		"source-map-support": "0.3.2"
 	},
 	"devDependencies": {
 		"babel": "5.8.23",
-		"eslint": "1.6.0"
+		"eslint": "1.7.3"
 	},
-	"repository": "andy-hanson/mason-node-util",
+	"repository": "mason-lang/mason-node-util",
 	"babel": {
 		"whitelist": ["es6.destructuring", "es6.modules", "es6.spread", "strict"]
 	},

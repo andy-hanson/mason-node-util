@@ -4,7 +4,7 @@ import compileWarnAndThrow from './compile-warn-and-throw'
 
 const sourceMaps = new Map()
 
-export default options => {
+export default function register(options) {
 	compileOptions = options
 	require.extensions['.ms'] = (newModule, filename) => {
 		const ms = readFileSync(filename, 'utf-8')
@@ -24,7 +24,7 @@ install({
 
 let compileOptions = null
 
-const compileAndRegisterSourceMap = (msSrc, inFilePath) => {
+function compileAndRegisterSourceMap(msSrc, inFilePath) {
 	const {code, sourceMap} = compileWarnAndThrow(msSrc, inFilePath, compileOptions)
 	const fullInPath = realpathSync(inFilePath)
 	sourceMaps.set(fullInPath, sourceMap)
