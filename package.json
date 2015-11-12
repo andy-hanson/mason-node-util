@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"files": ["dist", "src"],
 	"scripts": {
-		"install": "babel src --out-dir dist --source-maps",
+		"build": "babel src --out-dir dist --source-maps",
 		"watch": "babel src --out-dir dist --source-maps --watch",
 		"lint": "eslint src"
 	},
