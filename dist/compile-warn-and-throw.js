@@ -25,7 +25,11 @@
 
 	var _formatCompileError2 = _interopRequireDefault(_formatCompileError);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) {
+		return obj && obj.__esModule ? obj : {
+			default: obj
+		};
+	}
 
 	function compileWarnAndThrow(string, inFile, opts) {
 		return handle(_compile2.default, string, inFile, opts);
@@ -43,7 +47,7 @@
 		const warnings = _func.warnings;
 		const result = _func.result;
 
-		for (let warning of warnings) (0, _console.warn)((0, _formatCompileError.formatWarning)(warning, inFile));
+		for (const _ of warnings) (0, _console.warn)((0, _formatCompileError.formatWarning)(_, inFile));
 
 		if (result instanceof _CompileError2.default) {
 			setErrorMessage(result, inFile);

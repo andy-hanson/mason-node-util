@@ -14,8 +14,8 @@ export function parseWarnAndThrow(string, inFile, opts) {
 function handle(func, string, inFile, opts) {
 	const {warnings, result} = func(string, Object.assign({inFile}, opts))
 
-	for (let warning of warnings)
-		warn(formatWarning(warning, inFile))
+	for (const _ of warnings)
+		warn(formatWarning(_, inFile))
 
 	if (result instanceof CompileError) {
 		setErrorMessage(result, inFile)

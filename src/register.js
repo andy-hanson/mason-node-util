@@ -16,9 +16,7 @@ export default function register(options) {
 install({
 	retrieveSourceMap(source) {
 		const _ = sourceMaps.get(source)
-		return _ === undefined ?
-			oldRetrieveSourceMap(source):
-			{url: null, map: _}
+		return _ === undefined ? oldRetrieveSourceMap(source) : {url: null, map: _}
 	}
 })
 
