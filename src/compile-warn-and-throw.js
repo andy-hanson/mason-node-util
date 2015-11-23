@@ -1,31 +1,25 @@
 import {warn} from 'console'
-import compile, {parseAst} from 'mason-compile/dist/compile'
-import CompileError from 'mason-compile/dist/CompileError'
 import formatCompileError, {formatWarning} from './format-compile-error'
 
-export default function compileWarnAndThrow(string, inFile, opts) {
-	return handle(compile, string, inFile, opts)
+export default function compileWarnAndThrow(compiler, code, filename) {
+	return handle('compile', compiler, code, filename)
 }
 
-export function parseWarnAndThrow(string, inFile, opts) {
-	return handle(parseAst, string, inFile, opts)
+export function parseWarnAndThrow(compiler, code, filename) {
+	return handle('parse', compiler, code, filename)
 }
 
-function handle(func, string, inFile, opts) {
-	const {warnings, result} = func(string, Object.assign({inFile}, opts))
+function handle(method, compiler, code, filename) {
+	const {warnings, result} = compiler[method](code, filename)
 
 	for (const _ of warnings)
-		warn(formatWarning(_, inFile))
+		warn(formatWarning(_, filename))
 
-	if (result instanceof CompileError) {
-		setErrorMessage(result, inFile)
+	if (result instanceof compiler.CompileError) {
+		const formatted = formatCompileError(result, filename)
+		result.stack = result.stack.replace(result.message, formatted)
+		result.message = formatted
 		throw result
-	}
-	return result
-}
-
-function setErrorMessage(error, modulePath) {
-	const formatted = formatCompileError(error, modulePath)
-	error.stack = error.stack.replace(error.message, formatted)
-	error.message = formatted
+	} else
+		return result
 }

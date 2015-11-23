@@ -4,8 +4,8 @@ import compileWarnAndThrow from './compile-warn-and-throw'
 
 const sourceMaps = new Map()
 
-export default function register(options) {
-	compileOptions = options
+export default function register(compiler) {
+	registeredCompiler = compiler
 	require.extensions['.ms'] = (newModule, filename) => {
 		const ms = readFileSync(filename, 'utf-8')
 		const js = compileAndRegisterSourceMap(ms, filename)
@@ -20,11 +20,10 @@ install({
 	}
 })
 
-let compileOptions = null
+let registeredCompiler = null
 
-function compileAndRegisterSourceMap(msSrc, inFilePath) {
-	const {code, sourceMap} = compileWarnAndThrow(msSrc, inFilePath, compileOptions)
-	const fullInPath = realpathSync(inFilePath)
-	sourceMaps.set(fullInPath, sourceMap)
+function compileAndRegisterSourceMap(msCode, filename) {
+	const {code, sourceMap} = compileWarnAndThrow(registeredCompiler, msCode, filename)
+	sourceMaps.set(realpathSync(filename), sourceMap)
 	return code
 }

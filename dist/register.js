@@ -28,8 +28,8 @@
 
 	const sourceMaps = new Map();
 
-	function register(options) {
-		compileOptions = options;
+	function register(compiler) {
+		registeredCompiler = compiler;
 
 		require.extensions['.ms'] = (newModule, filename) => {
 			const ms = (0, _fs.readFileSync)(filename, 'utf-8');
@@ -50,15 +50,14 @@
 		}
 
 	});
-	let compileOptions = null;
+	let registeredCompiler = null;
 
-	function compileAndRegisterSourceMap(msSrc, inFilePath) {
-		var _compileWarnAndThrow = (0, _compileWarnAndThrow3.default)(msSrc, inFilePath, compileOptions);
+	function compileAndRegisterSourceMap(msCode, filename) {
+		var _compileWarnAndThrow = (0, _compileWarnAndThrow3.default)(registeredCompiler, msCode, filename);
 
 		const code = _compileWarnAndThrow.code;
 		const sourceMap = _compileWarnAndThrow.sourceMap;
-		const fullInPath = (0, _fs.realpathSync)(inFilePath);
-		sourceMaps.set(fullInPath, sourceMap);
+		sourceMaps.set((0, _fs.realpathSync)(filename), sourceMap);
 		return code;
 	}
 });

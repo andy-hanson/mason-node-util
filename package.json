@@ -11,16 +11,15 @@
 	},
 	"dependencies": {
 		"chalk": "1.1.1",
-		"mason-compile": "mason-lang/mason-compile",
-		"source-map-support": "0.3.3"
+		"source-map-support": "0.4.0"
 	},
 	"devDependencies": {
-		"babel-cli": "6.0.14",
-		"babel-plugin-transform-es2015-destructuring": "6.0.14",
-		"babel-plugin-transform-es2015-modules-umd": "6.0.14",
-		"babel-plugin-transform-es2015-parameters": "6.0.14",
-		"babel-plugin-transform-strict-mode": "6.0.14",
-		"eslint": "1.10.1",
+		"babel-cli": "6.3.13",
+		"babel-plugin-transform-es2015-destructuring": "6.3.13",
+		"babel-plugin-transform-es2015-modules-umd": "6.3.13",
+		"babel-plugin-transform-es2015-parameters": "6.3.13",
+		"babel-plugin-transform-strict-mode": "6.3.13",
+		"eslint": "1.10.3",
 		"eslint-config-mason": "mason-lang/eslint-config-mason"
 	},
 	"babel": {
