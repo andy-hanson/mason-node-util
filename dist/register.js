@@ -26,10 +26,28 @@
 		};
 	}
 
-	const sourceMaps = new Map();
-
 	function register(compiler) {
-		registeredCompiler = compiler;
+		const sourceMaps = new Map();
+		(0, _sourceMapSupport.install)({
+			retrieveSourceMap(source) {
+				const _ = sourceMaps.get(source);
+
+				return _ === undefined ? null : {
+					url: null,
+					map: _
+				};
+			}
+
+		});
+
+		function compileAndRegisterSourceMap(msCode, filename) {
+			var _compileWarnAndThrow = (0, _compileWarnAndThrow3.default)(compiler, msCode, filename);
+
+			const code = _compileWarnAndThrow.code;
+			const sourceMap = _compileWarnAndThrow.sourceMap;
+			sourceMaps.set((0, _fs.realpathSync)(filename), sourceMap);
+			return code;
+		}
 
 		require.extensions['.ms'] = (newModule, filename) => {
 			const ms = (0, _fs.readFileSync)(filename, 'utf-8');
@@ -37,28 +55,6 @@
 
 			newModule._compile(js, filename);
 		};
-	}
-
-	(0, _sourceMapSupport.install)({
-		retrieveSourceMap(source) {
-			const _ = sourceMaps.get(source);
-
-			return _ === undefined ? (0, _sourceMapSupport.retrieveSourceMap)(source) : {
-				url: null,
-				map: _
-			};
-		}
-
-	});
-	let registeredCompiler = null;
-
-	function compileAndRegisterSourceMap(msCode, filename) {
-		var _compileWarnAndThrow = (0, _compileWarnAndThrow3.default)(registeredCompiler, msCode, filename);
-
-		const code = _compileWarnAndThrow.code;
-		const sourceMap = _compileWarnAndThrow.sourceMap;
-		sourceMaps.set((0, _fs.realpathSync)(filename), sourceMap);
-		return code;
 	}
 });
 //# sourceMappingURL=register.js.map
