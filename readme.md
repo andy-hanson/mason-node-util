@@ -2,5 +2,4 @@ Utilities for using [mason](http://mason-lang.org) with [node.js](https://nodejs
 
 # Build
 
-	npm install -g broccoli
-	broccoli serve
+	npm run build
